@@ -268,7 +268,7 @@ six methods in total:
 - An arc from `x` to `y` is consistent if, for every possible value of `x`,
   there is a compatible value for `y`
 - This method finds some conditions that Forward Checking misses
-- Checking a particular arc is $O(n^2 \cdot d^2)$
+- Checking a particular arc is $O(n^2 \cdot d^3)$
 
 **Example:**
 
