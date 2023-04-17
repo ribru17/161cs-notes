@@ -189,3 +189,95 @@ Expand child nodes recursively, or using a stack.
 ### Check layer by layer?
 
 - Time? $b^d (\frac{b}{b-1})^2 = O(b^d)$
+
+# Lecture 5
+
+## Constraint Satisfaction Problems (CSP)
+
+- Standard formulation of CSP's as search
+- Standard search strategy
+- Improvements: six total
+
+### Formulation
+
+- Set of variables $x_1 \ldots x_{n}$ with values $D_1 \ldots D_{n}$
+  - These variables are discrete
+- Set of constraints
+  - Notion of desirability or penalty of violation (hard constraints vs soft
+    constraints)
+  - Unary (1 variable), Binary (2 variables), or higher-order constraints
+    - SAT problem needs higher-order constraints to be NP-complete
+
+**Example:** Three-colorable problem with Australian provinces:
+
+- $x_i : WA, NT, SA, Q, NSQ, V, T$
+- $D_i : {Red, Blue, Green}$
+- Constraints: $WA \neq NT, WA \neq SA, \ldots$
+
+**Example:** Problem with 3 variables, 2 values
+
+```mermaid
+flowchart TD
+
+A(Start) --> B(x=0)
+A --> C(x=1)
+A --> D(y=0)
+A --> E(y=1)
+A --> F(z=0)
+A --> G(z=1)
+B --> H(y=0)
+B --> I(y=1)
+B --> J(z=0)
+B --> K(z=1)
+H --> L(z=0)
+H --> M(z=1)
+C --> N[[...]]
+N --> O[[...]]
+```
+
+Number of possible states (with repetitions): $n \cdot d + (n-1) \cdot d +
+\ldots + 1 \cdot d = n!\cdot d^n$
+
+Max depth `n` (number of variables) and branching factor `d` (number of values)
+
+### Observations
+
+DFS is the best way to traverse such a problem.
+
+**Reason:** There are many more ways such that you can say preemptively that
+"this node is dead" and we don't have to traverse any of its children. There are
+six methods in total:
+
+1. No constraint is violated
+2. two
+3. three
+4. Forward Checking
+5. Arc Consistency
+6. six
+
+#### Forward Checking
+
+- Maintain a set of values for each variable
+- When you assign a value to a variable, update possible values for other
+  variables
+- Declare "bad state" if some variable loses all of its values
+
+#### Arc Consistency
+
+- 'Arc' is just an edge from one node to another
+- An arc from `x` to `y` is consistent if, for every possible value of `x`,
+  there is a compatible value for `y`
+- This method finds some conditions that Forward Checking misses
+- Checking a particular arc is $O(n^2 \cdot d^2)$
+
+**Example:**
+
+```mermaid
+flowchart LR
+
+A("V\n{R, G, B}") --> B("NW\n{R, B}")
+B --> C("SA\n{B}")
+```
+
+Arc V to NW is consistent, but arc NW to SA is not consistent because if NW is
+`B`, SA loses all values.
