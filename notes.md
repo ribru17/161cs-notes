@@ -346,3 +346,52 @@ B --> C("SA\n{B}")
 
 Arc V to NW is consistent, but arc NW to SA is not consistent because if NW is
 `B`, SA loses all values.
+
+# Lecture 6
+
+## Variable & Value Ordering Heuristic
+
+These heuristics are orthogonal: they serve different purposes and we should use
+them both.
+
+### Value Ordering
+
+- Choose least constraining value
+- Choose value that rules out the fewest values of remaining variables
+
+### Variable Ordering
+
+- Choose most constrained variable
+- Choose variable with the fewest legal values
+
+Bottom line: heuristics can benefit searches but they also have cost! We must
+weigh the benefits versus the rewards.
+
+## Two-player games
+
+- The concept of a "Goal State" becomes replaced by a Terminal State
+- We cannot control other player's actions! So our tree concept is not as
+  useful... (no need to store path?)
+
+### Minimax Algorithm
+
+- Assume each state has some assigned "score" where the higher the score, the
+  better it is for you as the player
+- We assume the opponent is a perfect player who will always try to minimize
+  your score
+- With these assumptions, we use the minimax algorithm to pick branches of a
+  decision tree that **maximizes** the **minimum** values (i.e., make it so the
+  opponent's minimization of our score is always as high as possible)
+- Scores are specific to a certain game and not arbitrary, but use assumptions
+  - **Example:** For chess, assign a score or weight to ceratin pieces: pawns
+    are worth less than rooks which are worth less than queens, etc.
+
+### Alpha-Beta Pruning
+
+- Check the book implementation
+- Assume maximized nodes on depths / layers that are our turn, minimized nodes
+  on levels that are our opponents turn
+- Use this information to skip checking branches that we know will not fit our
+  heuristic
+- With depth `d` and branching factor `b` we have worse case $O(b^{d})$
+  performance and best case $O(b^{\frac{d}{2}})$
