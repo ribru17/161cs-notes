@@ -190,6 +190,71 @@ Expand child nodes recursively, or using a stack.
 
 - Time? $b^d (\frac{b}{b-1})^2 = O(b^d)$
 
+# Lecture 4
+
+## Heuristics
+
+### Uniform-Cost Search (UCS)
+
+Generalizes breadth-first search (allows arbitrary costs) for actions
+
+- Always expand node on fringe that has least cost
+- Suppose $\epsilon$: Smallest cost `y` of any action
+- If the optimal solution has cost `C*` ithen we may have to go down to depth
+  $\lceil C^\ast / \epsilon\rceil$
+
+#### Evaluation of UCS
+
+- Complete? **Yes**
+- Optimal? **Yes**
+- Time complexity? $b^{\lceil C^\ast / \epsilon\rceil}$
+- Space complexity? $b^{\lceil C^\ast / \epsilon\rceil}$
+
+### Greedy Search
+
+Faster than UCS but not always optimal. Requires a heuristic.
+
+#### Evaluation of Greedy
+
+- Complete? **No**
+- Optimal? **No**
+- Time complexity? $O(b^{m})$ (must store heuristic function for nodes during
+  traversal)
+- Space complexity? $O(b^{m})$
+
+#### Key Differences From UCS
+
+- UCS evaluation function is $g(n)$, where $g(n)$ is the cost of the path from
+  the initial node.
+- Greedy evaluation function is $h(n)$ which is a heuristic that estimates the
+  cost of the path from initial node to goal node.
+- **Example**: If trying to find path between cities (using roads to in-between
+  cities) greedy would choose city closest to goal city (heuristic) while UCS
+  would choose city with least distance from initial node
+
+### A* Search
+
+Combination of the two previous searches, with evaluation function $f(n) =
+g(n) + h(n)$
+
+- $g(n)$ is cost so far
+- $h(n)$ is estimated cost to goal from n
+- $f(n)$ is estimated total cost of a path that goes through `h`
+
+#### Heuristic is "admissible"
+
+- $h(n) \le h^{\ast}(n)$ where $h^{\ast}(n)$ is least cost to go from `n` to
+  goal
+- $h(n) \ge 0$
+- $h(0) = \emptyset$
+
+**A\* with an admissible heuristic $h(n)$ is optimal and complete.**
+
+_For multiple heuristics $h_1$ and $h_2$, if $h_2(n) \ge h_1(n)$ then $h_2$
+dominates $h_1$. In other words, $h(n) = max(h_1(n), h_2(n))$_
+
+Speed / efficiency of the algorithm depends on how smart the heuristic is.
+
 # Lecture 5
 
 ## Constraint Satisfaction Problems (CSP)
