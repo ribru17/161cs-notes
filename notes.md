@@ -1,10 +1,5 @@
 # Lecture 1
 
-<!-- center mermaid diagrams -->
-<style>
-  .mermaid { display: flex; justify-content: center; }
-</style>
-
 ## Reasoning
 
 - Deduction:
