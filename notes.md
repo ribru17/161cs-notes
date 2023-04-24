@@ -390,3 +390,148 @@ weigh the benefits versus the rewards.
   heuristic
 - With depth `d` and branching factor `b` we have worse case $O(b^{d})$
   performance and best case $O(b^{\frac{d}{2}})$
+
+# Lecture 7
+
+## Knowledge Representation & Reasoning (Logic)
+
+```mermaid
+flowchart LR
+
+A[(Knowledge\nStatement in Logic)] --> B(Logical Deduction) --> Conclusion
+```
+
+### Model
+
+**(Old way: HIGH CORRECTNESS DESIRED but can be slow)**
+
+- Symbolic: Logic
+- Numeric: Probability
+
+### Learn
+
+**(Newer way: LOWER CORRECTNESS but viable because of abundance of data and
+lower threshold of correctness required for many problems)**
+
+- Data
+
+"Neuro Symbolic Approach"
+
+#### Example
+
+You are an agent A. You can detect adjacent cells (not diagonals). **Pit** cells
+have breezy cells adjacent to them and **Wumpus** cells have smelly cells
+adjacent to them. We must avoid both.
+
+We use reasoning to determine which cells are safe. Most animals are incapable
+of this level of reasoning.
+
+## Propositional Logic (Boolean)
+
+- Syntax
+  - Basic Syntax
+    - Variables $x_1 \ldots x_{n}$
+    - Logical Connectives (and ($\land$), or ($\lor$), not ($\lnot$), imply
+      ($\implies$), equivalent ($\iff$))
+    - Rules
+      - A variable is a sentence
+      - If S is a sentence, then not S is a sentence
+      - If $S_1, S_2$ are sentences, then all of the following are sentences:
+        - $S_1 \lor S_2$
+        - $S_1 \land S_2$
+        - $S_1 \implies S_2$
+        - $S_1 \iff S_2$
+  - Minimal Forms
+- Semantic
+
+### Normal Forms
+
+- Conjunctive Normal Form (CNF):
+  - Expressed as **conjunctions** of clauses
+  - E.g. $(A \lor \lnot B) \land (B \lor \lnot C \lor \lnot D) \land \ldots$
+- Disjunctive Normal Form (DNF):
+  - Expressed as a **disjunction** of terms
+    - A `term` is a conjunction of literals
+  - E.g. $(A \land B \land \lnot C) \lor (X \land \lnot B \land Y) \lor \ldots$
+- Negative Normal Form (NNF):
+  - **Negation only appears near variables**
+  - Literal is NNF
+  - If $S_1, S_2$ are NNF's then:
+    - $S_1 \land S_2$ is NNF
+    - $S_1 \lor S_2$ is NNF
+  - CNF and DNF are special cases of NNF
+
+### Literal
+
+- $X$ (Positive literal)
+- $\lnot X$ (Negative literal)
+
+### Horn Clause
+
+Has at most one positive literal
+
+### Clause
+
+Connects literals with `or`
+
+E.g. $A \lor \lnot B \lor C$
+
+### Term
+
+Connects literals with `and`
+
+E.g. $A \land \lnot B \land C$
+
+## Sentence Representations
+
+**Example**
+
+If there is a burglary or an earthquake, then my alarm will sound.
+
+$B \lor E \implies A$
+
+is equivalent to:
+
+$\lnot A \implies \lnot B \land \lnot E$
+
+| Worlds | Earthquake | Burglary | Alarm |
+| ------ | ---------- | -------- | ----- |
+| $W_1$  | T          | T        | T     |
+| $W_2$  | T          | T        | F     |
+| $W_3$  | T          | F        | T     |
+| $W_4$  | T          | F        | F     |
+| $W_5$  | F          | T        | T     |
+| $W_6$  | F          | T        | F     |
+| $W_7$  | F          | F        | T     |
+| $W_8$  | F          | F        | F     |
+
+All possible worlds based on this sentence number 8 in total. We can see which
+worlds hold given the first sentence.
+
+We check using the conversion $B \lor E \implies A \implies \lnot(B \lor E) \lor
+A$
+
+If this new sentence is `True` for a given world, then that world holds.
+
+E.g. $W_1$ holds but $W_2$ does not.
+
+## Meaning and Models
+
+- $M(\alpha)$
+  - Meaning of $\alpha$
+  - Models of $\alpha$
+    - Worlds that satisfy $\alpha$
+
+### Properties
+
+- $M(\alpha \lor \beta) = M(\alpha) \cup M(\beta)$
+- $M(\alpha \land \beta) = M(\alpha) \cap M(\beta)$
+- $M(\alpha) = M(\lnot \alpha)$
+
+**Examples**
+
+$\alpha$ is equivalent to $\beta$: $M(\alpha) = M(\beta)$
+
+$\alpha$ is inconsistent: $M(\alpha) = \emptyset$
+
+$\alpha$ is vacuous: $M(\alpha) = W$
