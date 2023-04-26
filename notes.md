@@ -535,3 +535,127 @@ $\alpha$ is equivalent to $\beta$: $M(\alpha) = M(\beta)$
 $\alpha$ is inconsistent: $M(\alpha) = \emptyset$
 
 $\alpha$ is vacuous: $M(\alpha) = W$
+
+# Lecture 8
+
+### Semantics
+
+- $M(\alpha) = \{w: w \vDash \alpha\}$
+  - Meaning: $w$ satisfies/entails $\alpha$. In other words, $\alpha$ is true at
+    world $w$.
+- $\alpha \implies \beta$
+  - $\lnot \alpha \lor \beta$
+  - $\lnot (\alpha \land \lnot \beta)$
+
+### Logic Definitions
+
+- $\alpha$ and $\beta$ are equivalent:
+  - $M(\alpha) = M(\beta)$
+- $\alpha$ is inconsistent/unsatisfiable (always false):
+  - $M(\alpha) = \emptyset$
+- $\alpha$ is tautology/vacuous/valid (always true):
+  - $M(\alpha) = \mathbb{W}$
+- $\alpha, \beta$ are **mutually exclusive** (never true together):
+  - $M(\alpha)\cap M(\beta) = \emptyset$
+- $\alpha, \beta$ are **exhaustive**:
+  - $M(\alpha) \cup M(\beta) = \mathbb{W}$
+- $\beta$ follows from $\alpha$
+  - $\alpha$ implies $\beta$
+  - $\alpha$ entails $\beta$
+  - $M(\alpha) \subseteq M(\beta)$
+
+## Inference (Deduction)
+
+Rules that permit you to add sets to your knowledge base given certain
+conditions.
+
+- **Example:** If $\alpha$ and $\alpha \implies \beta$, you may add $\beta$ to
+  the knowledge base.
+  - Expressed as $\frac{\alpha, \alpha \implies \beta}{\beta}$
+
+**Or-Introduction:**
+
+$$\frac{\alpha, \beta}{\alpha \lor \beta}$$
+
+**And-Introduction:**
+
+$$\frac{\alpha, \beta}{\alpha \land \beta}$$
+
+**Modus Tollens:**
+
+$$\frac{\alpha \implies \beta, \lnot \beta}{\lnot \alpha}$$
+
+#### Semantics:
+
+$\alpha$ can be derived from $\Delta$ using inference rules $R$: $\Delta
+\vdash_R \alpha$
+
+- Relation
+  - $\Delta \vDash \alpha$
+- Sentence
+  - $\Delta \implies \alpha$
+
+$\Delta \vDash \alpha$ **if** sentence $\Delta \implies \alpha$ is valid
+
+### Given (knowledge base)
+
+- $\alpha_1, \alpha_2, \ldots, \alpha_n$ (set)
+- $\Delta = \alpha_1 \land \alpha_2 \land \ldots \land \alpha_n$ (single
+  sentence)
+
+### Question
+
+Does sentence $\alpha$ from kb $\Delta$?
+
+1. Truth table, model enumeration: $\Delta \vDash \alpha$, aka $M(\Delta)
+   \subseteq M(\alpha)$
+2. Inference rules
+3. Reduction to SAT
+4. Conversion to normal forms (knowledge compilation)
+
+### Refutation Theorem
+
+$$ \Delta \vDash \alpha \iff \nvDash \Delta, \lnot \alpha $$
+
+Or
+
+$$ \Delta \vDash \alpha \iff \Delta \land \lnot \alpha \text{ inconsistent} $$
+
+The set of formulas $\Delta$ has a consequence $\alpha$ _if and only if_ the
+system composed by $\Delta$ together with $\lnot \alpha$ is unsatisfiable.
+
+### Inference Rules
+
+Inference rules $R$ are complete **if**: If $\Delta \vDash \alpha$, then $\Delta
+\vdash_R \alpha$.
+
+#### Resolution
+
+$$ \frac{\alpha \lor \beta, \lnot \beta \lor \gamma}{\alpha \lor \gamma} $$
+
+(Uses $\frac{\alpha \implies \beta}{\lnot \alpha \lor \beta}$)
+
+Resolution is "Refutation Complete" when applied to CNF (Conjunctive Normal
+Form)
+
+#### Examples
+
+$$ \frac{A \lor B, \lnot B \lor C \lor D}{A \lor C \lor D} $$
+
+$$ \frac{(A \lor \lnot B) \implies C, C \implies D \lor \lnot E, E \lor D}{A
+\implies D} $$
+
+### Solve with inference rules
+
+#### Steps:
+
+1. $\Delta \land \lnot \alpha$
+2. Convert to CNF
+3. Apply resolution
+4. EITHER:
+   1. Find inconsistency: $\Delta \vDash \alpha$
+   2. Do **not** find inconsistency: $\Delta \nvDash \alpha$
+
+In human terms: take all rules given, keep expanding them out to as many
+different forms as possible, and if you do not find any contradictions (e.g. $A$
+and $\lnot A$) then $\Delta \nvDash \alpha$
