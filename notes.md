@@ -426,6 +426,10 @@ adjacent to them. We must avoid both.
 We use reasoning to determine which cells are safe. Most animals are incapable
 of this level of reasoning.
 
+## First-Order Logic (Symbolic)
+
+Uses symbols like $\exists, \forall,$ etc.
+
 ## Propositional Logic (Boolean)
 
 - Syntax
@@ -469,6 +473,11 @@ of this level of reasoning.
 ### Horn Clause
 
 Has at most one positive literal
+
+- **Example**:
+  - $A \lor B \lor \lnot C$? NO
+  - $\lnot A \lor B \lor \lnot C$? YES
+  - $\lnot A \lor \lnot B \lor \lnot C$? YES
 
 ### Clause
 
@@ -546,6 +555,8 @@ $\alpha$ is vacuous: $M(\alpha) = W$
 - $\alpha \implies \beta$
   - $\lnot \alpha \lor \beta$
   - $\lnot (\alpha \land \lnot \beta)$
+- $\alpha$ is **satisfiable** if $M(\alpha) \neq \emptyset$
+- $P \implies Q$ is equivalent to $\lnot P \lor Q$
 
 ### Logic Definitions
 
@@ -626,8 +637,25 @@ system composed by $\Delta$ together with $\lnot \alpha$ is unsatisfiable.
 
 ### Inference Rules
 
+#### Completeness
+
 Inference rules $R$ are complete **if**: If $\Delta \vDash \alpha$, then $\Delta
 \vdash_R \alpha$.
+
+#### Soundness
+
+Inference rules $R$ are sound **if**: $\Delta \vdash_R \alpha \subseteq \Delta
+\vDash \alpha$
+
+#### In Other Words
+
+Soundness: inference rules are $\subseteq$ all truth
+
+Completeness: inferences rules are $\supseteq$ all truth
+
+**If $R$ is the whole truth and nothing but the truth:**
+
+$R$ is sound and complete
 
 #### Resolution
 
@@ -652,7 +680,8 @@ $$ \frac{(A \lor \lnot B) \implies C, C \implies D \lor \lnot E, E \lor D}{A
 1. $\Delta \land \lnot \alpha$
 2. Convert to CNF
 3. Apply resolution
-4. EITHER:
+4. Test inconsistencies on $\lnot \alpha$
+5. EITHER:
    1. Find inconsistency: $\Delta \vDash \alpha$
    2. Do **not** find inconsistency: $\Delta \nvDash \alpha$
 
