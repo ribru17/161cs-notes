@@ -688,3 +688,100 @@ $$ \frac{(A \lor \lnot B) \implies C, C \implies D \lor \lnot E, E \lor D}{A
 In human terms: take all rules given, keep expanding them out to as many
 different forms as possible, and if you do not find any contradictions (e.g. $A$
 and $\lnot A$) then $\Delta \nvDash \alpha$
+
+# Lecture 9
+
+## Inference Methods
+
+1. Truth tables
+2. Inference rules: resolution (on CNF) $\Delta \vDash \alpha$
+3. By conversion to SAT
+4. By conversion to "hashable forms" (knowledge compilation)
+
+### Converting Sentences Into CNF
+
+1. Get rid of all connectives that are not $\lnot, \land, \lor$
+   1. E.g. $\alpha \implies \beta$ $\longrightarrow$ $\lnot \alpha \lor \beta$
+2. Use De Morgan's law to push negations inside:
+   1. E.g. $\lnot (\alpha \land \beta) \longrightarrow \lnot \alpha \lor \lnot
+      \beta$
+3. Distribute $\lor$ and $\land$
+
+### SAT
+
+- $\Delta \vDash \alpha \iff \Delta \lor \lnot \alpha \text{ Unsat}$
+- $\Delta$ is equivalent to $\alpha$:
+  - $\Delta \vDash \alpha, \alpha \vDash \Delta$
+- $\Delta$ is valid:
+  - $\lnot \Delta \text{ Unsat}$
+
+### Conversion to SAT
+
+#### Backtracking (DFS) + Detecting Failures
+
+Known as DPLL
+
+- Uses var/value ordering
+- Unit resolution
+  - Fast
+  - Removes redundant/unnecessary information
+  - E.g. $\frac{\lnot A, B, A \lor \lnot B \lor C \lor \lnot D}{C \lor \lnot D}$
+    - (We can remove variables that have conflicting parity)
+
+##### Search Strategies
+
+Complete? Systematic search
+
+Incomplete? Local search
+
+###### Local Search
+
+Search worlds, trying to minimize violated clauses or maximize satisfied clauses
+(depending)
+
+**Side walk**: Structure where a neighboring solution differs from the current
+solution in exactly one variable.
+
+## NNF Circuit
+
+```mermaid
+flowchart TD
+
+A((OR)) --> B((AND))
+A --> C((AND))
+B --> D((OR))
+B --> E((OR))
+C --> F((OR))
+C --> G((OR))
+D --> H((AND))
+D --> I((AND))
+E --> J((AND))
+E --> K((AND))
+F --> L((AND))
+F --> M((AND))
+G --> N((AND))
+G --> O((AND))
+H --> !A
+H --> P[B]
+I --> !A
+I --> !B
+J --> Q[A]
+J --> P
+K --> Q
+K --> !B
+L --> !C
+L --> R[D]
+M --> !C
+M --> !D
+O --> S[C]
+N --> S
+N --> !D
+O --> !D
+```
+
+- Decomposable:
+  - For every conjunction $\alpha, \beta$: $vars(\alpha) \cap vars(\beta)$
+- Deterministic:
+  - For every disjunction $\alpha, \beta$: $\alpha \land \beta \text{ unsat}$
+- Smooth:
+  - For every disjunction $\alpha, \beta$: $vars(\alpha) = vars(\beta)$
