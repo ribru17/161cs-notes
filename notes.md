@@ -780,8 +780,135 @@ O --> !D
 ```
 
 - Decomposable:
-  - For every conjunction $\alpha, \beta$: $vars(\alpha) \cap vars(\beta)$
+  - For every conjunction (and) $\alpha, \beta$: $vars(\alpha) \cap vars(\beta)
+    = \emptyset$
 - Deterministic:
-  - For every disjunction $\alpha, \beta$: $\alpha \land \beta \text{ unsat}$
+  - For every disjunction (or) $\alpha, \beta$: $\alpha \land \beta \text{
+    unsat}$
 - Smooth:
-  - For every disjunction $\alpha, \beta$: $vars(\alpha) = vars(\beta)$
+  - For every disjunction (or) $\alpha, \beta$: $vars(\alpha) = vars(\beta)$
+
+# Lecture 10
+
+## First-Order Logic
+
+FOL / Predicate Calculus (PC)
+
+- Expressive
+- Succinct
+
+**Example:**
+
+$\forall r: Pit(r) \Rightarrow [\forall s: Adjacent(r,s) \Rightarrow Breezy(s)]$
+
+Explanation: For all squares that are pits, adjacent squares are breezy
+
+### Worlds
+
+- Objects:
+  - People, houses, cells, wumpus, etc.
+- Properties:
+  - Smelly, large, red
+- Relations:
+  - inside, adjacent, large, sibling, etc.
+- Functions:
+  - Best friend of, etc.
+
+**Examples:**
+
+_One plus one equals two_
+
+- Objects: one, two
+- Relations: equals
+- Functions: plus
+- Properties: `None`
+
+_Squares adjacent to the wumpus are smelly_
+
+- Objects: wumpus, square
+- Relations: adjacent
+- Functions: `None`
+- Properties: smelly
+
+### Syntax
+
+- Domain specific:
+  - Constants:
+    - 2, Jack, UCLA, etc.
+  - Predicates:
+    - adjacent, smelly, larger, etc.
+  - Functions:
+    - plus, left-of, etc.
+- General:
+  - Variables:
+    - x, y, z, etc.
+  - Connectives:
+    - $\land, \lor, \lnot, \Rightarrow, \Leftrightarrow$
+  - Equality:
+    - $=$
+  - Quantifiers:
+    - $\forall, \exists$
+
+### Atomic Sentence
+
+- Predicate ($term_1, \ldots, term_m$)
+
+### Term
+
+- Constant
+- Variable
+- Function ($term_1, \ldots, term_m$)
+
+### Universal Quantification
+
+$\forall$ `<variable>` `<sentence>`
+
+### Existential Quantification
+
+$\exists$ `<variable>` `<sentence>`
+
+### Properties of Quanitifiers
+
+$\forall x \forall y$ `<sent>` same as $\forall y \forall x$ `<sent>`
+
+$\exists x \exists y$ `<sent>` same as $\exists y \exists x$ `<sent>`
+
+**DIFFERENT:**
+
+$\forall x \exists y$ `<sent>` $\neq$ $\exists y \forall x$ `<sent>`
+
+**Example:**
+
+Predicate: $Loves(x,y) \longrightarrow \text{x loves y}$
+
+- $\forall y \exists x : Loves(x,y)$
+  - "Everyone is loved by someone"
+- $\exists x \forall y : Loves(x,y)$
+  - "There is someone who loves everyone"
+
+**EQUIVALENT:**
+
+- $\forall x : Likes(x, IceCream)$
+- $\lnot \exists x : \lnot Likes(x, IceCream)$
+
+Both mean everybody likes ice cream
+
+**Example:**
+
+Spot has two sisters
+
+- Spot: Constant
+- Sister: Predicate
+- First-Order form
+  - At least two sisters?
+    - $\exists x,y : Sister(spot, x) \land Sister(spot, y) \land \lnot(x = y)$
+  - Exactly two sisters?
+    - _ABOVE CLAUSE, AND:_ $\lnot \exists z : Sister(spot, z) \land \lnot (x =
+      a) \land \lnot (y = z)$
+    - $\forall z : Sister(spot, z) \Rightarrow ((z = x) \lor (z = y))$
+
+### Uniqueness Quantifier
+
+$\exists! x : king(x)$
+
+Equivalent statement:
