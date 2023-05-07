@@ -912,3 +912,5 @@ Spot has two sisters
 $\exists! x : king(x)$
 
 Equivalent statement:
+
+$\exists x : king(x) \land \forall y : king(y) \Rightarrow (y = x)$
