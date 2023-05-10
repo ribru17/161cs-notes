@@ -914,3 +914,67 @@ $\exists! x : king(x)$
 Equivalent statement:
 
 $\exists x : king(x) \land \forall y : king(y) \Rightarrow (y = x)$
+
+# Lecture 11
+
+- Reducing FOL inference to propositional
+- Single/Restricted Methods:
+  - Forward chaining
+  - Backward chaining
+- Resolution:
+  - FOL is semi-decidable
+  - Refutation Complete: Guarantees to terminate (e.g. no longer applicable)
+
+**Reminder:** Term = variable, constant, or func(term1, term2, ...)
+
+**Ground Term:** Term that is _NOT_ a variable (and if it is a function it is a
+function of ground terms)
+
+Converting to propositional logic implies removing variables.
+
+$\exists x : Crown(x) \land Onhead(x, John) \implies Crown(C_1) \land
+Onhead(C_1, John)$
+
+Where $C_1$ is a constant not mentioned anywhere in the knowledge base.
+
+### Theorem (Herbrand, 1930)
+
+If sentence $\alpha$ is _entailed_ by a FOL KB, then it is entailed by a finite
+subset of the propositional KB.
+
+### Forward and Backward Chaining
+
+- Applied to restricted KB's
+  - Definite clauses:
+    - Exactly one positive literal
+    - Distinct from Horn clauses, which are at most one positive literal
+    - E.g.: $\lnot A \lor \lnot B \lor C \implies A \land B \Rightarrow C$
+  - No function symbols
+
+#### Forward Chaining
+
+Start at given clauses, expand upwards until you can prove the desired
+conclusion
+
+#### Backward Chaining
+
+Start at desired conclusion, expand downwards until you find all clauses listed
+in the knowledge base
+
+### Unification
+
+**EXAMPLE:**
+
+$\alpha = Knows(John, x), \beta = Knows(John, Jane)$
+
+Substitution: $\theta = \{x / Jane\}$
+
+$\alpha \theta = \beta \theta$
+
+**EXAMPLE:**
+
+$\alpha: Knows(John, x), \beta : Knows(y, OJ)$
+
+$\theta = \{x / OJ, y / John\}$
+
+$\alpha \theta = Knows(John, OJ) = \beta \theta$
