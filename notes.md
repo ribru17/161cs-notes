@@ -978,3 +978,70 @@ $\alpha: Knows(John, x), \beta : Knows(y, OJ)$
 $\theta = \{x / OJ, y / John\}$
 
 $\alpha \theta = Knows(John, OJ) = \beta \theta$
+
+# Lecture 12
+
+Nothing noteworthy
+
+# Lecture 13
+
+## Probabilistic Logic
+
+1. Probability as a basis of beliefs
+2. Bayesian Networks
+3. Inference
+4. Learning
+
+### Binary / Boolean Variable
+
+- $x: \{t, f\}$
+- $x, \lnot x \longrightarrow x=t, x=f \longrightarrow x, \overline{x}$
+
+### Variable Independence
+
+$\alpha, \beta$ are independent gives $\gamma$ if and only if $Pr(\alpha |
+\beta, \gamma) = Pr(\alpha | \gamma)$
+
+- Variable sets $X, Y, Z$
+  - $X, Y$ are independent given $Z$
+  - $Pr(x|y,z) = Pr(x|z)$ for all $x,y,z$
+    - $X = {A, B}$
+    - $X = {C}$
+    - $Z = {D, E}$
+    - Leads to $4 \cdot 2 \cdot 4$ possible combinations (each variable is
+      either `true` or `false`, i.e. $A: a, \overline{a}$ and $B: b,
+      \overline{b}$)
+
+### Causal Graph
+
+It is a DAG
+
+```mermaid
+flowchart TD
+
+E((E)) --> A((A))
+B((B)) --> A
+E --> R((R))
+A --> C((C))
+```
+
+- Parents(v):
+  - $A: E,B$
+  - $R: E$
+  - $C: A$
+- Descendants(v):
+  - $E: A,C,R$
+  - $B: A,C$
+  - $C: \emptyset$
+- Non-Descendants(v):
+  - $A:R$
+  - $E:B$
+  - $R:A,B,C$
+
+I(v, Parents(v), Non-Descendents(v))
+
+Meaning: v and Non-Descendents(v) are independent given Parents(v)
+
+Example: $I(B, \emptyset, RE)$: $B$ and $RE$ are independent
+
+What makes a Bayesian path blocked or closed?
