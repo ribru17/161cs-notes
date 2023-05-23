@@ -1045,3 +1045,62 @@ Meaning: v and Non-Descendents(v) are independent given Parents(v)
 Example: $I(B, \emptyset, RE)$: $B$ and $RE$ are independent
 
 What makes a Bayesian path blocked or closed?
+
+# Lecture 14
+
+## Inference
+
+- Queries
+- Algorithms
+  - Core complexity result
+  - Sketch state-of-the-art class of algorithms
+
+## Modeling
+
+---
+
+1. Prior marginals
+2. Posterior marginals
+3. MPE: Most probable explanation
+4. MAP: Maximimum a posterior hypothesis
+
+- SDP: Some decision probability
+- Causal queries:
+  - Interventional queries
+  - Counterfactual queries
+
+### MPE
+
+Out of a group of variables, choose the values for the variables in the group
+with the highest probability (that probability is known as the MPE probability.
+The group of variable values that gives this MPE is called the MPE
+instantiation)
+
+### MAP
+
+More general than MPE. Given evidence, map variables for highest probability.
+The variables are the Map instantiation, the probability that they coalesce into
+is the MAP probability.
+
+## Trees
+
+Computing "node" marginals of a tree is $O(n\cdot d^{w})$ where $n$ is the
+number of variables, $d$ is the (maximum) number of values, $w$ is the tree
+width.
+
+**NOTE:** Tree width is the maximum amount of parents per node.
+
+1. Problem statement
+2. Subjective benefit
+3. Learning from data
+   1. Variables
+   2. Structure (edges)
+   3. CPTs
+
+### Bipartite Model
+
+- Layer 1: Causes
+- Edges: From layer 1 to layer 2
+- Layer 2: Effects
+
+### Naive Based Structure
