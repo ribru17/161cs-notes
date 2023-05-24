@@ -1103,4 +1103,93 @@ width.
 - Edges: From layer 1 to layer 2
 - Layer 2: Effects
 
-### Naive Based Structure
+### Naive Bayes Structure
+
+Structure for classification tasks. Assumes presence of particular classes are
+independent from other class features.
+
+# Lecture 15
+
+## Bayes' Rule
+
+$$ Pr(A\mid B) = \frac{Pr(B\mid A)Pr(A)}{Pr(B)} $$
+
+$$ Pr(A\mid B, C) = \frac{Pr(B\mid A)Pr(C\mid A)Pr(A)}{Pr(B, C)} $$
+
+## D-Separation
+
+D-separation guarantees independence, but **NO** d-separation doesn't guarantee
+no independence.
+
+_NOTE_: Python networks package has a good d-separation algorithm which maybe
+should be studied. It cites a source for the algorithm as well.
+
+## Learning
+
+1. Parameters
+   - Complete data
+   - Incomplete data
+2. Structure
+
+### Parameters
+
+Take an example network:
+
+```mermaid
+flowchart TD
+
+A(Cold) --> B(Chills)
+A --> C(Aches)
+D(Flu) --> B
+D --> C
+D --> E(Fever)
+D --> F(Sore throat)
+G(Tonsilitis) --> F
+G --> E
+```
+
+We have a complete data set if we have the value for every variable. If the data
+set is complete, then the parameter values are unique.
+
+Let's say that the illness variables are F and the effects of the sickness are
+A.
+
+| F | A |                                          |
+| - | - | ---------------------------------------- |
+| T | T | $\theta_{a\mid f}$                       |
+| T | F | $\theta_{\overline{a}\mid f}$            |
+| F | T | $\theta_{a\mid \overline{f}}$            |
+| F | F | $\theta_{\overline{a}\mid \overline{f}}$ |
+
+$a$ and $f$ are **parameters** of A and F.
+
+Case example:
+
+|          | Cold | Flu | Tonsilitis | Chills | Fever | Aches | Sore Throat |
+| -------- | ---- | --- | ---------- | ------ | ----- | ----- | ----------- |
+| $e_1$    | t    | ?   | f          | ?      | t     | f     | t           |
+| $e_2$    |      |     |            |        |       |       |             |
+| $\vdots$ |      |     |            |        |       |       |             |
+| $e_n$    |      |     |            |        |       |       |             |
+
+$e_1: Pr(C=t,T=f,F=t,A=f,S=t)$
+
+The above is a complete data set, since all parameters are known.
+
+**NOTE:** The _likelihood_ $L_1 = Pr_1(e_1)\cdot Pr_1(e_2)\cdot \ldots \cdot
+Pr_1(e_n)$.
+
+Similarly $L_2 = Pr_2(e_1)\cdot Pr_2(e_2)\cdot \ldots \cdot Pr_2(e_n)$.
+
+**NOTE:** When _estimating_ a probability, use $\hat{\theta}_n$ rather than
+$\theta_n$ (optional).
+
+For solving probabilities for incomplete data sets, things are more difficult.
+
+#### Expectation Maximization
+
+Method to solve incomplete data sets. Involves calculating more and more
+probabilities for hypothetical unknown values and multiplying them together. The
+more you calculate and multiply the more accurate your estimate will be: given
+enough, the values stop changing and the convergent value you have is the result
+of the calculation.
