@@ -1193,3 +1193,50 @@ probabilities for hypothetical unknown values and multiplying them together. The
 more you calculate and multiply the more accurate your estimate will be: given
 enough, the values stop changing and the convergent value you have is the result
 of the calculation.
+
+# Lecture 16
+
+## Learning
+
+- Learn a model (generative learning, unsupervised)
+- Learning a query (discriminative learning, supervised)
+  - Examples: decision trees, random forest
+  - Learn a "classifier"
+- Learning parameters under complete data
+- Learning parameters under incomplete data (EM algorithm)
+- Learning structure
+
+There is a distinction between labeled data and unlabeled data.
+
+### Entropy of a Variable
+
+Higher entropy means more uncertainty.
+
+$$ENT(X) = -\sum_{\alpha} Pr(X) \log_{\theta} Pr(X)$$
+
+### Conditional Entropy
+
+$$ ENT(X\mid y) = -\sum_{x} Pr(x\mid y) \log_{\theta} Pr(x\mid y) $$
+
+$$ENT(X\mid Y) = \sum_{y} Pr(y) \cdot ENT(x\mid y)$$
+
+$$ENT(X\mid Y) \le ENT(X)$$
+
+### Decision Trees
+
+Example
+
+```mermaid
+flowchart TD
+
+A(Patrons?) --> |"None (a)"|B("-7, 11")
+A --> |"Some (b)"|C("+1, 3, 6, 8")
+A --> |"Full (c)"|D("+4, 12\n-2, 5, 9, 10")
+D .-> E[[1/3 True, 2/3 False]]
+C .-> F[[1 True, 0 False]]
+B .-> G[[0 True, 1 False]]
+E --> I[...]
+E --> H[...]
+```
+
+$$ENT(ww\mid Patrons) = (\frac{2}{12})a + (\frac{4}{12})b + (\frac{6}{12})c$$
