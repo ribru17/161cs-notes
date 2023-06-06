@@ -1240,3 +1240,35 @@ E --> H[...]
 ```
 
 $$ENT(ww\mid Patrons) = (\frac{2}{12})a + (\frac{4}{12})b + (\frac{6}{12})c$$
+
+# Lecture 17
+
+## Machine Learning
+
+- Neurons
+- Neural Networks (syntax, semantics)
+- Training NN
+
+### Neurons
+
+- Activations (input, output)
+- Weights
+- Bias
+- Activation functions
+  - Step
+  - Sign
+  - Sigmoid
+  - Relu
+
+#### Activation Functions
+
+- Sigmoid: $g(x) = \frac{1}{1+e^{-x}}$
+- Step: $g(x) = 1: x\ge t, g(x) = 0: x<t$ where $t$ is the **threshold**
+- Sign: $g(x) = 1: x\ge 0, g(x) = 0: x<0$
+- Relu: $g(x) = x: x\ge 0, g(x) = 0: x<0$
+
+### Loss Function
+
+Mean-square error
+
+$$ MSE=\frac{1}{2} \sum_{i=1}^{N} (NN(I_i)-L_i)^{2} $$
